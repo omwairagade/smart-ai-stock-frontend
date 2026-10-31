@@ -1,0 +1,57 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-background: 248 250 252;
+  --color-surface: 255 255 255;
+  --color-surfaceLight: 241 245 249;
+  --color-border: 226 232 240;
+  --color-primary: 13 148 136;
+  --color-secondary: 124 58 237;
+  --color-warning: 217 119 6;
+  --color-danger: 220 38 38;
+  --color-success: 5 150 105;
+  --color-info: 37 99 235;
+  --color-textPrimary: 15 23 42;
+  --color-textSecondary: 71 85 105;
+  --color-textMuted: 148 163 184;
+}
+
+.dark {
+  --color-background: 10 14 20;
+  --color-surface: 15 20 32;
+  --color-surfaceLight: 22 28 44;
+  --color-border: 30 36 51;
+  --color-primary: 45 212 191;
+  --color-secondary: 139 92 246;
+  --color-warning: 245 158 11;
+  --color-danger: 244 63 94;
+  --color-success: 52 211 153;
+  --color-info: 96 165 250;
+  --color-textPrimary: 243 244 246;
+  --color-textSecondary: 156 163 175;
+  --color-textMuted: 107 114 128;
+}
+
+body {
+  @apply bg-background text-textPrimary;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::-webkit-scrollbar { width: 8px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgb(var(--color-border)); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--color-primary)); }
+
+@media (max-width: 768px) {
+  table {
+    min-width: 640px;
+  }
+}
