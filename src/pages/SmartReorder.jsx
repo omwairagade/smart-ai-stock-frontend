@@ -4,7 +4,8 @@ import DashboardLayout from "../components/layout/DashboardLayout";
 import { getReorderSuggestions, approveReorderSuggestion } from "../services/reorderService";
 import PriorityBadge from "../components/reorder/PriorityBadge";
 import ConfidenceBadge from "../components/forecasting/ConfidenceBadge";
-import { RefreshCw, AlertTriangle, IndianRupee, CheckCircle2, Loader2 } from "lucide-react";
+import Skeleton from "../components/common/Skeleton";
+import { RefreshCw, AlertTriangle, IndianRupee, CheckCircle2 } from "lucide-react";
 
 var priorityFilters = [
   { key: "all", label: "All" },
@@ -28,8 +29,59 @@ function SmartReorder() {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center py-24">
-          <Loader2 className="animate-spin text-primary" size={28} />
+        <div className="flex flex-col gap-6">
+          <div>
+            <Skeleton className="h-7 w-44 mb-2" />
+            <Skeleton className="h-4 w-80 max-w-full" />
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            {[1, 2, 3, 4].map(function (n) {
+              return (
+                <div key={n} className="bg-surface border border-border rounded-xl p-4">
+                  <Skeleton className="w-9 h-9 rounded-lg mb-3" />
+                  <Skeleton className="h-3 w-28 mb-2" />
+                  <Skeleton className="h-6 w-20" />
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex gap-2 flex-wrap">
+            {[1, 2, 3, 4].map(function (n) {
+              return <Skeleton key={n} className="h-9 w-20 rounded-lg" />;
+            })}
+          </div>
+
+          <div className="bg-surface border border-border rounded-xl overflow-hidden">
+            <div className="overflow-x-auto">
+              <div className="min-w-[800px]">
+                <div className="flex items-center gap-4 px-4 py-3 border-b border-border">
+                  {[1, 2, 3, 4, 5, 6, 7].map(function (n) {
+                    return <Skeleton key={n} className="h-3 flex-1" />;
+                  })}
+                  <Skeleton className="h-3 w-16" />
+                </div>
+                {[1, 2, 3, 4, 5, 6].map(function (n) {
+                  return (
+                    <div key={n} className="flex items-center gap-4 px-4 py-4 border-b border-border last:border-0">
+                      <div className="flex-1">
+                        <Skeleton className="h-4 w-32 mb-2" />
+                        <Skeleton className="h-3 w-20" />
+                      </div>
+                      <Skeleton className="h-4 flex-1" />
+                      <Skeleton className="h-4 flex-1" />
+                      <Skeleton className="h-4 flex-1" />
+                      <Skeleton className="h-6 flex-1 rounded-full" />
+                      <Skeleton className="h-6 flex-1 rounded-full" />
+                      <Skeleton className="h-4 flex-1" />
+                      <Skeleton className="h-8 w-16 rounded-lg" />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
       </DashboardLayout>
     );

@@ -4,7 +4,8 @@ import { getForecastSummary, getAiInsights, getProductForecasts, refreshForecast
 import ForecastChart from "../components/forecasting/ForecastChart";
 import ForecastTable from "../components/forecasting/ForecastTable";
 import ConfidenceBadge from "../components/forecasting/ConfidenceBadge";
-import { Target, PackageSearch, Clock, Sparkles, RefreshCw, AlertTriangle, TrendingUp,TrendingDown, Loader2 } from "lucide-react";
+import Skeleton from "../components/common/Skeleton";
+import { Target, PackageSearch, Clock, Sparkles, RefreshCw, AlertTriangle, TrendingUp,TrendingDown } from "lucide-react";
 import toast from "react-hot-toast";
 
 function AIForecasting() {
@@ -30,8 +31,55 @@ function AIForecasting() {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center py-24">
-          <Loader2 className="animate-spin text-primary" size={28} />
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <Skeleton className="h-7 w-48 mb-2" />
+              <Skeleton className="h-4 w-72 max-w-full" />
+            </div>
+            <Skeleton className="h-10 w-40 rounded-lg" />
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            {[1, 2, 3, 4].map(function (n) {
+              return (
+                <div key={n} className="bg-surface border border-border rounded-xl p-4">
+                  <Skeleton className="w-9 h-9 rounded-lg mb-3" />
+                  <Skeleton className="h-3 w-24 mb-2" />
+                  <Skeleton className="h-6 w-16" />
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="bg-surface border border-border rounded-xl p-4 md:p-5">
+            <Skeleton className="h-4 w-56 mb-4" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {[1, 2, 3].map(function (n) {
+                return <Skeleton key={n} className="h-24 rounded-lg" />;
+              })}
+            </div>
+          </div>
+
+          <div className="bg-surface border border-border rounded-xl p-4 md:p-5">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+              <div>
+                <Skeleton className="h-4 w-36 mb-2" />
+                <Skeleton className="h-3 w-48" />
+              </div>
+              <Skeleton className="h-9 w-44 rounded-lg" />
+            </div>
+            <Skeleton className="h-64 w-full rounded-lg" />
+          </div>
+
+          <div className="bg-surface border border-border rounded-xl p-4 md:p-5">
+            <Skeleton className="h-4 w-48 mb-4" />
+            <div className="flex flex-col gap-3">
+              {[1, 2, 3, 4, 5].map(function (n) {
+                return <Skeleton key={n} className="h-10 w-full" />;
+              })}
+            </div>
+          </div>
         </div>
       </DashboardLayout>
     );

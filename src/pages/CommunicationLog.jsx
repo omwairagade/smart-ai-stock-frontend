@@ -5,7 +5,8 @@ import { getCommunicationLogs, logCommunication } from "../services/communicatio
 import { getSuppliers } from "../services/supplierService";
 import LogItem from "../components/communication/LogItem";
 import LogCommunicationModal from "../components/communication/LogCommunicationModal";
-import { MessageSquare, Clock, AlertCircle, Users, Plus, Search, Loader2 } from "lucide-react";
+import Skeleton from "../components/common/Skeleton";
+import { MessageSquare, Clock, AlertCircle, Users, Plus, Search } from "lucide-react";
 
 var typeFilters = [
   { key: "all", label: "All" },
@@ -36,8 +37,52 @@ function CommunicationLog() {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center py-24">
-          <Loader2 className="animate-spin text-primary" size={28} />
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <Skeleton className="h-7 w-56 mb-2" />
+              <Skeleton className="h-4 w-80 max-w-full" />
+            </div>
+            <Skeleton className="h-10 w-44 rounded-lg" />
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            {[1, 2, 3, 4].map(function (n) {
+              return (
+                <div key={n} className="bg-surface border border-border rounded-xl p-4">
+                  <Skeleton className="w-9 h-9 rounded-lg mb-3" />
+                  <Skeleton className="h-3 w-24 mb-2" />
+                  <Skeleton className="h-6 w-12" />
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-3">
+            <Skeleton className="h-10 flex-1 rounded-lg" />
+            <Skeleton className="h-10 w-full md:w-44 rounded-lg" />
+          </div>
+
+          <div className="flex gap-2 flex-wrap">
+            {[1, 2, 3, 4, 5, 6].map(function (n) {
+              return <Skeleton key={n} className="h-9 w-20 rounded-lg" />;
+            })}
+          </div>
+
+          <div className="bg-surface border border-border rounded-xl p-4 md:p-6">
+            {[1, 2, 3, 4].map(function (n) {
+              return (
+                <div key={n} className="flex items-start gap-3 mb-6 last:mb-0">
+                  <Skeleton className="w-9 h-9 rounded-full shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <Skeleton className="h-4 w-64 max-w-full mb-2" />
+                    <Skeleton className="h-3 w-full max-w-lg mb-2" />
+                    <Skeleton className="h-3 w-32" />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </DashboardLayout>
     );
@@ -70,7 +115,7 @@ function CommunicationLog() {
   var stats = [
     { label: "Total Logs", value: logs.length, icon: MessageSquare, color: "text-primary bg-primary/10" },
     { label: "This Week", value: thisWeekCount, icon: Clock, color: "text-info bg-info/10" },
-    { label: "Pending Follow-ups", value: pendingFollowUps, icon: AlertCircle, color: "text-warning bg-warning/10" },
+    { label: "Pending Follow-ups", value: pendingFollowUps, icon: AlertCircle, color:"text-warning bg-warning/10" },
     { label: "Suppliers Contacted", value: uniqueSuppliers, icon: Users, color: "text-secondary bg-secondary/10" },
   ];
 
@@ -178,4 +223,3 @@ function CommunicationLog() {
 }
 
 export default CommunicationLog;
-

@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import { useNotifications } from "../context/NotificationContext";
 import NotificationItem from "../components/notifications/NotificationItem";
-import { CheckCheck, Bell, Loader2 } from "lucide-react";
+import Skeleton from "../components/common/Skeleton";
+import { CheckCheck, Bell } from "lucide-react";
 
 var filters = [
   { key: "all", label: "All" },
@@ -22,8 +23,35 @@ function Notifications() {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center py-24">
-          <Loader2 size={28} className="animate-spin text-primary" />
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <Skeleton className="h-7 w-44 mb-2" />
+              <Skeleton className="h-4 w-56 max-w-full" />
+            </div>
+            <Skeleton className="h-10 w-40 rounded-lg" />
+          </div>
+
+          <div className="flex gap-2 flex-wrap">
+            {[1, 2, 3, 4, 5, 6].map(function (n) {
+              return <Skeleton key={n} className="h-9 w-20 rounded-lg" />;
+            })}
+          </div>
+
+          <div className="bg-surface border border-border rounded-xl overflow-hidden">
+            {[1, 2, 3, 4, 5, 6].map(function (n) {
+              return (
+                <div key={n} className="flex items-start gap-3 p-4 border-b border-border last:border-b-0">
+                  <Skeleton className="w-9 h-9 rounded-lg shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <Skeleton className="h-4 w-48 max-w-full mb-2" />
+                    <Skeleton className="h-3 w-full max-w-md mb-2" />
+                    <Skeleton className="h-3 w-20" />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </DashboardLayout>
     );

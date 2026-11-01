@@ -3,7 +3,8 @@ import DashboardLayout from "../components/layout/DashboardLayout";
 import { getSupplierEvaluations } from "../services/evaluationService";
 import ScoreBar from "../components/evaluation/ScoreBar";
 import TrendIndicator from "../components/forecasting/TrendIndicator";
-import { Star, TrendingUp, AlertTriangle, CalendarCheck, Loader2 } from "lucide-react";
+import Skeleton from "../components/common/Skeleton";
+import { Star, TrendingUp, AlertTriangle, CalendarCheck } from "lucide-react";
 
 function Evaluation() {
   const [supplierEvaluations, setSupplierEvaluations] = useState([]);
@@ -19,15 +20,62 @@ function Evaluation() {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center py-24">
-          <Loader2 className="animate-spin text-primary" size={28} />
+        <div className="flex flex-col gap-6">
+          <div>
+            <Skeleton className="h-7 w-56 mb-2" />
+            <Skeleton className="h-4 w-96 max-w-full" />
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            {[1, 2, 3, 4].map(function (n) {
+              return (
+                <div key={n} className="bg-surface border border-border rounded-xl p-4">
+                  <Skeleton className="w-9 h-9 rounded-lg mb-3" />
+                  <Skeleton className="h-3 w-24 mb-2" />
+                  <Skeleton className="h-6 w-20" />
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[1, 2, 3, 4].map(function (n) {
+              return (
+                <div key={n} className="bg-surface border border-border rounded-xl p-5">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <Skeleton className="h-4 w-36 mb-2" />
+                      <Skeleton className="h-3 w-48 max-w-full" />
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <Skeleton className="h-7 w-10 mb-2" />
+                      <Skeleton className="h-3 w-14" />
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-3">
+                    {[1, 2, 3, 4].map(function (m) {
+                      return (
+                        <div key={m}>
+                          <div className="flex items-center justify-between mb-1.5">
+                            <Skeleton className="h-3 w-20" />
+                            <Skeleton className="h-3 w-8" />
+                          </div>
+                          <Skeleton className="h-2 w-full rounded-full" />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </DashboardLayout>
     );
   }
 
   var avgScore = Math.round(
-    supplierEvaluations.reduce(function (sum, e) { return sum + e.overallScore; }, 0) / supplierEvaluations.length
+    supplierEvaluations.reduce(function (sum, e) { return sum + e.overallScore; }, 0)/ supplierEvaluations.length
   );
   var topPerformer = supplierEvaluations.reduce(function (top, e) {
     return e.overallScore > top.overallScore ? e : top;

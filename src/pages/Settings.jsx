@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import SettingsTabs from "../components/settings/SettingsTabs";
 import ToggleSwitch from "../components/settings/ToggleSwitch";
+import Skeleton from "../components/common/Skeleton";
 import { useAuth } from "../context/AuthContext";
 import { changePassword, updateEmail } from "../services/authService";
 import {
@@ -135,8 +136,42 @@ function Settings() {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center py-24">
-          <Loader2 size={28} className="animate-spin text-primary" />
+        <div className="flex flex-col gap-6">
+          <div>
+            <Skeleton className="h-7 w-36 mb-2" />
+            <Skeleton className="h-4 w-96 max-w-full" />
+          </div>
+
+          <div className="bg-surface border border-border rounded-xl overflow-hidden">
+            <div className="flex gap-6 px-4 md:px-6 py-4 border-b border-border">
+              {[1, 2, 3, 4].map(function (n) {
+                return <Skeleton key={n} className="h-5 w-20" />;
+              })}
+            </div>
+
+            <div className="p-4 md:p-6">
+              <div className="flex flex-col gap-5 max-w-xl">
+                <div className="flex items-center gap-4">
+                  <Skeleton className="w-16 h-16 rounded-full shrink-0" />
+                  <div>
+                    <Skeleton className="h-4 w-36 mb-2" />
+                    <Skeleton className="h-3 w-24" />
+                  </div>
+                </div>
+
+                {[1, 2, 3, 4].map(function (n) {
+                  return (
+                    <div key={n}>
+                      <Skeleton className="h-3 w-24 mb-2" />
+                      <Skeleton className="h-10 w-full rounded-lg" />
+                    </div>
+                  );
+                })}
+
+                <Skeleton className="h-10 w-36 rounded-lg" />
+              </div>
+            </div>
+          </div>
         </div>
       </DashboardLayout>
     );
@@ -167,7 +202,7 @@ function Settings() {
                 </div>
 
                 <Field label="Full Name" value={profile.name} onChange={function (e) { updateProfile("name", e.target.value); }} />
-                <Field label="Email Address" value={profile.email} onChange={function (e) { updateProfile("email", e.target.value); }} type="email" />
+                <Field label="Email Address" value={profile.email} onChange={function(e) { updateProfile("email", e.target.value); }} type="email" />
                 <Field label="Phone Number" value={profile.phone} onChange={function (e) { updateProfile("phone", e.target.value); }} />
 
                 <div>
@@ -192,7 +227,7 @@ function Settings() {
 
             {activeTab === "business" && (
               <div className="flex flex-col gap-5 max-w-xl">
-                <Field label="Business Name" value={business.name} onChange={function (e) { updateBusiness("name", e.target.value); }} />
+                <Field label="Business Name" value={business.name} onChange={function(e) { updateBusiness("name", e.target.value); }} />
                 <Field label="GSTIN" value={business.gstin} onChange={function (e) { updateBusiness("gstin", e.target.value); }} />
                 <Field label="Business Address" value={business.address} onChange={function (e) { updateBusiness("address", e.target.value); }} />
                 <Field label="Business Email" value={business.email} onChange={function (e) { updateBusiness("email", e.target.value); }} type="email" />
@@ -291,4 +326,3 @@ function Settings() {
 }
 
 export default Settings;
-

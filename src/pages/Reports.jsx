@@ -3,8 +3,9 @@ import toast from "react-hot-toast";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import { getReports, generateReport } from "../services/reportService";
 import ReportTypeIcon from "../components/reports/ReportTypeIcon";
+import Skeleton from "../components/common/Skeleton";
 import { downloadReport } from "../utils/downloadReport";
-import { FileBarChart2, CalendarClock, Layers, Download, Plus, X, Loader2 } from "lucide-react";
+import { FileBarChart2, CalendarClock, Layers, Download, Plus, X } from "lucide-react";
 
 var categories = ["All", "Inventory", "Suppliers", "Purchases", "Forecasting", "Financial"];
 
@@ -111,8 +112,47 @@ function Reports() {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center py-24">
-          <Loader2 className="animate-spin text-primary" size={28} />
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <Skeleton className="h-7 w-32 mb-2" />
+              <Skeleton className="h-4 w-80 max-w-full" />
+            </div>
+            <Skeleton className="h-10 w-48 rounded-lg" />
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            {[1, 2, 3, 4].map(function (n) {
+              return (
+                <div key={n} className="bg-surface border border-border rounded-xl p-4">
+                  <Skeleton className="w-9 h-9 rounded-lg mb-3" />
+                  <Skeleton className="h-3 w-28 mb-2" />
+                  <Skeleton className="h-6 w-12" />
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex gap-2 flex-wrap">
+            {[1, 2, 3, 4, 5, 6].map(function (n) {
+              return <Skeleton key={n} className="h-9 w-24 rounded-lg" />;
+            })}
+          </div>
+
+          <div className="bg-surface border border-border rounded-xl overflow-hidden">
+            {[1, 2, 3, 4, 5, 6].map(function (n) {
+              return (
+                <div key={n} className="flex items-center gap-4 px-4 md:px-5 py-4 border-b border-border last:border-0">
+                  <Skeleton className="w-10 h-10 rounded-lg shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <Skeleton className="h-4 w-56 max-w-full mb-2" />
+                    <Skeleton className="h-3 w-64 max-w-full" />
+                  </div>
+                  <Skeleton className="h-9 w-10 sm:w-28 rounded-lg shrink-0" />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </DashboardLayout>
     );
