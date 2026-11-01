@@ -112,25 +112,6 @@ Pages never read the data files directly. They call functions in `src/services/`
 
 To connect a real backend or AI API, replace the body of each service function with an `axios` call that returns the same data shape. The pages do not need to change.
 
-## Screenshots
-
-Add screenshots to `docs/screenshots/` using the file names below.
-
-| Page | Screenshot |
-|---|---|
-| Login | ![Login](docs/screenshots/login.png) |
-| Dashboard | ![Dashboard](docs/screenshots/dashboard.png) |
-| Inventory | ![Inventory](docs/screenshots/inventory.png) |
-| Suppliers | ![Suppliers](docs/screenshots/suppliers.png) |
-| Purchase Orders | ![Purchase Orders](docs/screenshots/purchase-orders.png) |
-| AI Forecasting | ![AI Forecasting](docs/screenshots/ai-forecasting.png) |
-| Smart Reorder | ![Smart Reorder](docs/screenshots/smart-reorder.png) |
-| Evaluation | ![Evaluation](docs/screenshots/evaluation.png) |
-| Communication Log | ![Communication Log](docs/screenshots/communication-log.png) |
-| Notifications | ![Notifications](docs/screenshots/notifications.png) |
-| Reports | ![Reports](docs/screenshots/reports.png) |
-| Settings | ![Settings](docs/screenshots/settings.png) |
-
 ## Team
 
 B.Tech CSE final-year project, 4 members.
