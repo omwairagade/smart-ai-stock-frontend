@@ -178,12 +178,16 @@ function Reports() {
   ];
 
   function handleDownload(report) {
-    try {
-      downloadReport(report);
-      toast.success("Downloaded \"" + report.name + "\"");
-    } catch (err) {
-      toast.error("Failed to download report");
-    }
+    Promise.resolve()
+      .then(function () {
+        return downloadReport(report);
+      })
+      .then(function () {
+        toast.success("Downloaded \"" + report.name + "\"");
+      })
+      .catch(function () {
+        toast.error("Failed to download report");
+      });
   }
 
   function handleGenerate(data) {

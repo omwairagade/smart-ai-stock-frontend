@@ -1,7 +1,4 @@
-﻿import { jsPDF } from "jspdf";
-import autoTable from "jspdf-autotable";
-import * as XLSX from "xlsx";
-import { products, getStockStatus } from "../data/products";
+﻿import { products, getStockStatus } from "../data/products";
 import { suppliers } from "../data/suppliers";
 import { purchaseOrders, calculateTotal } from "../data/purchaseOrders";
 import { productForecasts } from "../data/forecasts";
@@ -113,89 +110,95 @@ function getReportTableData(category) {
 }
 
 function downloadAsPDF(report) {
-  var doc = new jsPDF();
+  return Promise.all([import("jspdf"), import("jspdf-autotable")]).then(function (mods) {
+    var jsPDF = mods[0].jsPDF;
+    var autoTable = mods[1].default;
 
-  doc.setFontSize(16);
-  doc.setFont(undefined, "bold");
-  doc.text("StockSync AI - Report Export", 20, 20);
+    var doc = new jsPDF();
 
-  doc.setDrawColor(200);
-  doc.line(20, 25, 190, 25);
+    doc.setFontSize(16);
+    doc.setFont(undefined, "bold");
+    doc.text("StockSync AI - Report Export", 20, 20);
 
-  doc.setFontSize(13);
-  doc.setFont(undefined, "bold");
-  doc.text(report.name, 20, 38);
+    doc.setDrawColor(200);
+    doc.line(20, 25, 190, 25);
 
-  doc.setFontSize(11);
-  doc.setFont(undefined, "normal");
-  var lines = [
-    "Category: " + report.category,
-    "Generated Date: " + report.generatedDate,
-    "File Size: " + report.size,
-  ];
-  var y = 48;
-  lines.forEach(function (line) {
-    doc.text(line, 20, y);
-    y += 7;
-  });
+    doc.setFontSize(13);
+    doc.setFont(undefined, "bold");
+    doc.text(report.name, 20, 38);
 
-  var tableData = getReportTableData(report.category);
-
-  if (tableData) {
-    autoTable(doc, {
-      startY: y + 6,
-      head: [tableData.headers],
-      body: tableData.rows,
-      theme: "grid",
-      styles: { fontSize: 8, cellPadding: 3 },
-      headStyles: { fillColor: [37, 99, 235], textColor: 255, fontStyle: "bold" },
-      alternateRowStyles: { fillColor: [245, 247, 250] },
+    doc.setFontSize(11);
+    doc.setFont(undefined, "normal");
+    var lines = [
+      "Category: " + report.category,
+      "Generated Date: " + report.generatedDate,
+      "File Size: " + report.size,
+    ];
+    var y = 48;
+    lines.forEach(function (line) {
+      doc.text(line, 20, y);
+      y += 7;
     });
-  }
 
-  var finalY = tableData ? doc.lastAutoTable.finalY + 10 : y + 10;
-  doc.setFontSize(9);
-  doc.setTextColor(140);
-  doc.text("This is a system-generated report from StockSync AI.", 20, finalY);
+    var tableData = getReportTableData(report.category);
 
-  doc.save(sanitizeFileName(report.name) + ".pdf");
+    if (tableData) {
+      autoTable(doc, {
+        startY: y + 6,
+        head: [tableData.headers],
+        body: tableData.rows,
+        theme: "grid",
+        styles: { fontSize: 8, cellPadding: 3 },
+        headStyles: { fillColor: [37, 99, 235], textColor: 255, fontStyle: "bold" },
+        alternateRowStyles: { fillColor: [245, 247, 250] },
+      });
+    }
+
+    var finalY = tableData ? doc.lastAutoTable.finalY + 10 : y + 10;
+    doc.setFontSize(9);
+    doc.setTextColor(140);
+    doc.text("This is a system-generated report from StockSync AI.", 20, finalY);
+
+    doc.save(sanitizeFileName(report.name) + ".pdf");
+  });
 }
 
 function downloadAsExcel(report) {
-  var data = [
-    ["StockSync AI - Report Export"],
-    [],
-    ["Report Name", report.name],
-    ["Category", report.category],
-    ["Generated Date", report.generatedDate],
-    ["File Size", report.size],
-    [],
-  ];
+  return import("xlsx").then(function (XLSX) {
+    var data = [
+      ["StockSync AI - Report Export"],
+      [],
+      ["Report Name", report.name],
+      ["Category", report.category],
+      ["Generated Date", report.generatedDate],
+      ["File Size", report.size],
+      [],
+    ];
 
-  var tableData = getReportTableData(report.category);
+    var tableData = getReportTableData(report.category);
 
-  if (tableData) {
-    data.push(tableData.headers);
-    tableData.rows.forEach(function (row) {
-      data.push(row);
+    if (tableData) {
+      data.push(tableData.headers);
+      tableData.rows.forEach(function (row) {
+        data.push(row);
+      });
+    }
+
+    var worksheet = XLSX.utils.aoa_to_sheet(data);
+    worksheet["!cols"] = (tableData ? tableData.headers : []).map(function () {
+      return { wch: 20 };
     });
-  }
 
-  var worksheet = XLSX.utils.aoa_to_sheet(data);
-  worksheet["!cols"] = (tableData ? tableData.headers : []).map(function () {
-    return { wch: 20 };
+    var workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
+
+    XLSX.writeFile(workbook, sanitizeFileName(report.name) + ".xlsx");
   });
-
-  var workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
-
-  XLSX.writeFile(workbook, sanitizeFileName(report.name) + ".xlsx");
 }
 
 export function downloadReport(report) {
   if (report.type === "Excel") {
-    downloadAsExcel(report);
-  } else {
-    downloadAsPDF(report);
+    return downloadAsExcel(report);
   }
+  return downloadAsPDF(report);
 }
