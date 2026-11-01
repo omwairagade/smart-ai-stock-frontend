@@ -83,7 +83,7 @@ export default function SupplierFormModal({ supplier, onClose, onSave }) {
             <input
               value={form.name}
               onChange={function (e) { updateField("name", e.target.value); }}
-              placeholder="e.g. ABC Traders"
+              placeholder="e.g. Bharat Cement Traders"
               className={"w-full px-3 py-2.5 rounded-lg bg-surfaceLight border text-sm text-textPrimary focus:outline-none focus:ring-2 focus:ring-primary/40 " + (errors.name ? "border-danger" : "border-border")}
             />
             {errors.name && <p className="text-xs text-danger mt-1">{errors.name}</p>}
@@ -128,7 +128,7 @@ export default function SupplierFormModal({ supplier, onClose, onSave }) {
             <input
               value={form.category}
               onChange={function (e) { updateField("category", e.target.value); }}
-              placeholder="e.g. Grains & Pulses"
+              placeholder="e.g. Cement & Concrete"
               className={"w-full px-3 py-2.5 rounded-lg bg-surfaceLight border text-sm text-textPrimary focus:outline-none focus:ring-2 focus:ring-primary/40 " + (errors.category ? "border-danger" : "border-border")}
             />
             {errors.category && <p className="text-xs text-danger mt-1">{errors.category}</p>}
