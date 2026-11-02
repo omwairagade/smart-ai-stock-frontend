@@ -1,6 +1,6 @@
-﻿export const profileData = {
+export const profileData = {
   name: "Om Wairagade",
-  email: "om.wairagade@tejasenterprises.com",
+  email: "tejas@enterprises.com",
   phone: "+91 98765 43210",
   role: "Admin",
   initials: "OW",

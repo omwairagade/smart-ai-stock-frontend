@@ -1,10 +1,10 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Lock, Mail, Loader2, BarChart3, Eye, EyeOff, ArrowRight, Sparkles, ShieldCheck, Zap, Package, Users, TrendingUp } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
-var DEMO_EMAIL = "om.wairagade@tejasenterprises.com";
+var DEMO_EMAIL = "tejas@enterprises.com";
 var DEMO_PASSWORD = "admin123";
 
 var pageStyle = {

@@ -1,17 +1,17 @@
-﻿import { simulateRequest, simulateError } from "./api";
+import { simulateRequest, simulateError } from "./api";
 
 var STORAGE_KEY = "stocksync_credentials";
 
 var mockUser = {
   id: "u1",
   name: "Om Wairagade",
-  email: "om.wairagade@tejasenterprises.com",
+  email: "tejas@enterprises.com",
   role: "Admin",
   workspace: "Tejas Enterprises",
 };
 
 var mockCredentials = {
-  email: "om.wairagade@tejasenterprises.com",
+  email: "tejas@enterprises.com",
   password: "admin123",
 };
 
